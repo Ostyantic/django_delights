@@ -9,7 +9,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Django Delights</title>
+    <title>{% block title %}Django Delights{% endblock %}</title>
 
     {% compress css %}
         <link rel="stylesheet" href="{% static 'src/output.css' %}">
@@ -17,10 +17,12 @@
 
 </head>
 <body class="bg-green-50">
-<div class="container mx-auto mt-4">
-    {% block content %}
-    {% endblock content %}
-</div>
+<main>
+    <div class="container mx-auto mt-4">
+        {% block content %}
+        {% endblock content %}
+    </div>
+</main>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 </body>
