@@ -9,7 +9,7 @@ class MenuItem(models.Model):
     price = models.FloatField(default=0.00)
 
     def __str__(self):
-        return f"title={self.title}; price={self.price}"
+        return f"{self.item_name}"
 
 
 class Ingredient(models.Model):
@@ -22,12 +22,7 @@ class Ingredient(models.Model):
     price_per_unit = models.FloatField(default=0)
 
     def __str__(self):
-        return f"""
-        name={self.name};
-        qty={self.quantity};
-        unit={self.unit};
-        unit_price={self.price_per_unit}
-        """
+        return f"{self.name}"
 
 
 class RecipeRequirement(models.Model):
@@ -39,7 +34,7 @@ class RecipeRequirement(models.Model):
     quantity = models.FloatField(default=0)
 
     def __str__(self):
-        return f"menu_item=[{self.menu_item.__str__()}]; ingredient={self.ingredient.name}; qty={self.quantity}"
+        return f"{self.menu_item.__str__()}"
 
 
 class Purchase(models.Model):
@@ -50,5 +45,5 @@ class Purchase(models.Model):
     date_purchased = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"menu_item=[{self.menu_item.__str__()}]; time={self.date_purchased}"
+        return f"{self.date_purchased}, {self.menu_item.__str__()}"
 
