@@ -16,13 +16,37 @@
     {% endcompress %}
 
 </head>
-<body class="bg-green-50">
+<body class="bg-pink-100">
+<header class="bg-amber-200">
+    {% block header %}
+    <div class="flex justify-between">
+        <a href="{% url 'home' %}"><h1 class="text-6xl">Django Delights</h1></a>
+        <div class="flex ">
+            <a href="{% url 'menu' %}">Menu</a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'inventory' %}">Inventory</a>
+                <a href="{% url 'purchases' %}">Purchases</a>
+                <form method="post" action="{% url 'logout' %}">
+                    {% csrf_token %}
+                    <button type="submit">Log Out</button>
+                </form>
+            {% else %}
+                <form method="post" action="{% url 'login' %}">
+                    {% csrf_token %}
+                    <button type="submit">Log In</button>
+                </form>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+</header>
 <main>
     <div class="container mx-auto mt-4">
         {% block content %}
         {% endblock content %}
     </div>
 </main>
+<footer class="bg-amber-200 fixed bottom-0 w-full text-center">Made with ❤️ Anthony Lopez &copy; 2024</footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 </body>
