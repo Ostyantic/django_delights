@@ -14,9 +14,16 @@ class InventoryPageView(ListView):
     model = Ingredient
 
 
-class MenuItemsPageView(ListView):
-    template_name = 'pages/menu.html'
-    model = RecipeRequirement
+def menu_items_page(request):
+    menu_items = MenuItem.objects.all()
+    recipe_requirements = RecipeRequirement.objects.all()
+
+    return render(request, "pages/menu.html", {"menu_items": menu_items, "recipe_requirements": recipe_requirements})
+
+
+# class MenuItemsPageView(ListView):
+#     template_name = 'pages/menu.html'
+#     model = RecipeRequirement
 
 
 class PurchasesPageView(ListView):

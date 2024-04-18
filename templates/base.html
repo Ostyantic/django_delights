@@ -16,13 +16,47 @@
     {% endcompress %}
 
 </head>
-<body class="bg-green-50">
+<body class="bg-pink-100">
+<header class="bg-amber-200 h-24">
+    {% block header %}
+        <div class="flex justify-between py-5">
+            <a href="{% url 'home' %}"><h1 class="text-base lg:text-6xl pl-5">Django Delights</h1></a>
+            <div class="flex pt-4 space-x-3 lg:text-xl">
+                <a class="pt-1" href="{% url 'menu' %}">Menu</a>
+                {% if user.is_authenticated %}
+                    <a class="pt-1" href="{% url 'inventory' %}">Inventory</a>
+                    <a class="pt-1" href="{% url 'purchases' %}">Purchases</a>
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button type="submit"
+                                class="text-white bg-red-700 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700">
+                            Log Out
+                        </button>
+                    </form>
+                {% else %}
+                    {% if request.path != "/accounts/login/" %}
+                        <form class="pr-0.5" method="post" action="{% url 'login' %}">
+                            {% csrf_token %}
+                            <button type="submit"
+                                    class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+                                Log In
+                            </button>
+                        </form>
+                    {% else %}
+                        <a class="pt-1 pr-5" href="{% url 'home' %}">Home</a>
+                    {% endif %}
+                {% endif %}
+            </div>
+        </div>
+    {% endblock %}
+</header>
 <main>
     <div class="container mx-auto mt-4">
         {% block content %}
         {% endblock content %}
     </div>
 </main>
+<footer class="bg-amber-200 fixed bottom-0 w-full text-center">Made with ❤️ Anthony Lopez &copy; 2024</footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
 </body>

@@ -1,3 +1,31 @@
 {% extends "base.html" %}
 
 {% block title %}Inventory{% endblock %}
+
+
+{% block content %}
+    <h2 class="text-center text-2xl font-bold mb-4">Inventory</h2>
+    <div class="overflow-x-auto text-right">
+        <table class="table-auto text-center w-full">
+            <thead>
+                <tr class="bg-amber-300">
+                    <th class="px-4 py-2">Name</th>
+                    <th class="px-4 py-2">Quantity</th>
+                    <th class="px-4 py-2">Unit</th>
+                    <th class="px-4 py-2">Price (per unit)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in ingredient_list %}
+                    <tr class="text-center even:bg-amber-50 odd:bg-amber-100 hover:bg-amber-200">
+                        <td class="px-4 py-2">{{ item.name }}</td>
+                        <td class="px-4 py-2">{{ item.quantity }}</td>
+                        <td class="px-4 py-2">{{ item.unit }}</td>
+                        <td class="px-4 py-2">${{ item.price_per_unit }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <button class="mt-5 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Add Ingredient</button>
+    </div>
+{% endblock %}
