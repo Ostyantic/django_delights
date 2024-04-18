@@ -2,6 +2,29 @@
 
 {% block title %}Inventory{% endblock %}
 
+
 {% block content %}
-<h2>This is the Inventory Page</h2>
+    <h2 class="text-center text-2xl font-bold mb-4">Inventory</h2>
+    <div class="overflow-x-auto">
+        <table class="table-auto w-full">
+            <thead>
+                <tr class="bg-amber-300">
+                    <th class="px-4 py-2">Name</th>
+                    <th class="px-4 py-2">Quantity</th>
+                    <th class="px-4 py-2">Unit</th>
+                    <th class="px-4 py-2">Price (per unit)</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in ingredient_list %}
+                    <tr class="text-center even:bg-amber-50 odd:bg-amber-100 hover:bg-amber-200">
+                        <td class="px-4 py-2">{{ item.name }}</td>
+                        <td class="px-4 py-2">{{ item.quantity }}</td>
+                        <td class="px-4 py-2">{{ item.unit }}</td>
+                        <td class="px-4 py-2">${{ item.price_per_unit }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}
