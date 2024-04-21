@@ -3,5 +3,9 @@
 {% block title %}Purchases{% endblock %}
 
 {% block content %}
-<h2>This is the Purchases Page</h2>
+<h2>Purchases</h2>
+    <br><br>
+    {% for purchase in purchase_list %}
+        <p>{{ purchase.date_purchased }} | {{ purchase.menu_item }} - ${{ purchase.menu_item.price }}</p>
+    {% endfor %}
 {% endblock %}
