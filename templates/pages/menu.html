@@ -6,36 +6,35 @@
     <h2 class="font-bold text-center text-2xl mb-4">Menu</h2>
 
     <div class="text-right">
-
-
-        <table class="bg-amber-200 text-left min-w-full divide-y divide-amber-200">
-            <thead class="bg-amber-200 text-xs font-medium text-amber-500 uppercase tracking-wider">
-            <tr>
-                <th class="px-6 py-3">Name</th>
-                <th class="px-6 py-3">Price</th>
-                <th class="px-6 py-3">Ingredients</th>
-            </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-amber-200">
-            {% for menu_item in menu_items %}
-                <tr class="even:bg-amber-100 hover:bg-amber-500 hover:text-amber-100 whitespace-nowrap">
-                    <td class="px-6 py-4 whitespace-nowrap">{{ menu_item.item_name }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">${{ menu_item.price|floatformat:2 }}</td>
-                    <td class="px-6 py-4 whitespace-nowrap">
-                        {% for recipe_item in recipe_requirements %}
-                            {% if recipe_item.menu_item == menu_item %}
-                                <p>{{ recipe_item.ingredient }}
-                                    - {{ recipe_item.quantity }} {{ recipe_item.ingredient.unit }}</p>
-                            {% endif %}
-                        {% endfor %}
-                    </td>
+        <div class="h-96 overflow-y-auto">
+            <table class="bg-amber-200 text-left min-w-full divide-y divide-amber-200">
+                <thead class="bg-amber-200 text-xs font-medium text-amber-500 uppercase tracking-wider">
+                <tr>
+                    <th class="px-6 py-3">Name</th>
+                    <th class="px-6 py-3">Price</th>
+                    <th class="px-6 py-3">Ingredients</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                </thead>
+                <tbody class="bg-white divide-y divide-amber-200">
+                {% for menu_item in menu_items %}
+                    <tr class="even:bg-amber-100 hover:bg-amber-500 hover:text-amber-100 whitespace-nowrap">
+                        <td class="px-6 py-4 whitespace-nowrap">{{ menu_item.item_name }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">${{ menu_item.price|floatformat:2 }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">
+                            {% for recipe_item in recipe_requirements %}
+                                {% if recipe_item.menu_item == menu_item %}
+                                    <p>{{ recipe_item.ingredient }}
+                                        - {{ recipe_item.quantity }} {{ recipe_item.ingredient.unit }}</p>
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
         <button class="mt-5 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
             Add Ingredient
         </button>
-
     </div>
 {% endblock %}
