@@ -5,29 +5,40 @@
 
 {% block content %}
     <h2 class="text-center text-2xl font-bold mb-4">Inventory</h2>
-    <div class="overflow-x-auto text-right">
-        <table class="text-left overflow-y-auto bg-amber-200 table-auto w-full min-w-full divide-y divide-amber-200">
-            <thead class="bg-amber-200 text-xs font-medium text-amber-500 uppercase tracking-wider">
-            <tr class="">
-                <th class="px-6 py-3">Name</th>
-                <th class="px-6 py-3">Quantity</th>
-                <th class="px-6 py-3">Unit</th>
-                <th class="px-6 py-3">Price (per unit)</th>
-            </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-amber-200">
-            {% for item in ingredient_list %}
-                <tr class="even:bg-amber-100 hover:bg-amber-500 hover:text-amber-100 whitespace-nowrap">
-                    <td class="px-6 py-4">{{ item.name }}</td>
-                    <td class="px-6 py-4">{{ item.quantity }}</td>
-                    <td class="px-6 py-4">{{ item.unit }}</td>
-                    <td class="px-6 py-4">${{ item.price_per_unit|floatformat:2 }}</td>
+    <div class="text-right">
+        <div class="h-96 overflow-y-auto text-right">
+            <table class="text-left bg-amber-200 table-auto w-full min-w-full divide-y divide-amber-200">
+                <thead class="sticky top-0 bg-amber-200 text-xs font-medium text-amber-500 uppercase tracking-wider">
+                <tr class="">
+                    <th class="px-6 py-3">Name</th>
+                    <th class="px-6 py-3">Quantity</th>
+                    <th class="px-6 py-3">Unit</th>
+                    <th class="px-6 py-3">Price (per unit)</th>
                 </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        <button class="mt-5 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+                </thead>
+                <tbody class="bg-white overflow-y-auto divide-y divide-amber-200">
+                {% for item in ingredient_list %}
+                    <tr class="even:bg-amber-100 hover:bg-amber-500 hover:text-amber-100 whitespace-nowrap">
+                        <td class="px-6 py-4">{{ item.name }}</td>
+                        <td class="px-6 py-4">{{ item.quantity }}</td>
+                        <td class="px-6 py-4">{{ item.unit }}</td>
+                        <td class="px-6 py-4">${{ item.price_per_unit|floatformat:2 }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <button id="createInventoryButton"
+                class="mt-5 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
             Add Ingredient
         </button>
     </div>
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        document.getElementById("createInventoryButton").onclick = function () {
+            location.href = "{% url 'add_inventory' %}";
+        };
+    </script>
 {% endblock %}
