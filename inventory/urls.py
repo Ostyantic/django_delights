@@ -1,11 +1,13 @@
 from django.urls import path
 
-from .views import HomePageView, InventoryPageView, CreateInventoryView, PurchasesPageView, menu_items_page
+from . import views
 
 urlpatterns = [
-    path('', HomePageView.as_view(), name="home"),
-    path('inventory/', InventoryPageView.as_view(), name="inventory"),
-    path('inventory/add', CreateInventoryView.as_view(), name="add_inventory"),
-    path('menu/', menu_items_page, name="menu"),
-    path('purchases/', PurchasesPageView.as_view(), name="purchases"),
+    path('', views.HomePageView.as_view(), name="home"),
+    path('inventory/', views.InventoryPageView.as_view(), name="inventory"),
+    path('inventory/add', views.CreateInventoryView.as_view(), name="add_inventory"),
+    path('menu/', views.menu_items_page, name="menu"),
+    path('menu/add,', views.MenuItemCreate.as_view(), name='add_menu'),
+    path('menu/add_menu_ingredient', views.RecipeRequirementCreate.as_view(), name='add_menu_ingredient'),
+    path('purchases/', views.PurchasesPageView.as_view(), name="purchases"),
 ]
