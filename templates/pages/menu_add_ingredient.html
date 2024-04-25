@@ -2,12 +2,7 @@
 
 
 {% block content %}
-    <h2 class="font-bold text-center text-2xl mb-4">Add a new Menu Item Ingredient</h2>
-
-        <form>
-        {% csrf_token %}
-        {{ form.as_p }}
-        </form>
+    <h2 class="font-bold text-center text-2xl mb-4">Add new Menu Item Ingredient</h2>
 
 
     <form method="post" class="max-w-sm mx-auto">
@@ -21,24 +16,32 @@
                             class="bg-amber-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     >
                         <option value="" selected="">---------</option>
-                        {% for menu_option in reciperequirement %}
-                            print({{ menu_option }})
-                            <option value="{{ forloop.counter0 }}" >{{ menu_option }}</option>
+                        {% for option in menu_items %}
+                            <option value="{{ forloop.counter }}">{{ option }}</option>
                         {% endfor %}
                     </select>
-{#                    <input type="text" maxlength="200" name="item_name" id="id_item_name"#}
-{#                           class="bg-amber-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"#}
-{#                           placeholder="e.g. Django Swirly Cakes" required/>#}
                 </div>
+
                 <div class="mb-5">
-                    <label for="id_price"
-                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Price</label>
-                    <input type="number" name="price" id="id_price" value="0.0" step="any"
+                    <label for="id_ingredient"
+                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ingredient</label>
+                    <select name="ingredient" id="id_ingredient" required
+                            class="bg-amber-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    >
+                        <option value="" selected="">---------</option>
+                        {% for option in ingredients %}
+                            <option value="{{ forloop.counter }}">{{ option }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="mb-5">
+                    <label for="id_quantity"
+                           class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Quantity</label>
+                    <input type="number" name="quantity" id="id_quantity" value="0" step="any"
                            class="bg-amber-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-amber-500 focus:border-amber-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                            required/>
                 </div>
-
-
             </div>
             <button type="submit"
                     class="w-full text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg sm:w-auto px-5 py-2.5 text-center dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
