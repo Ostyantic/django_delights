@@ -14,6 +14,7 @@
                     <th class="px-6 py-3">Quantity</th>
                     <th class="px-6 py-3">Unit</th>
                     <th class="px-6 py-3">Price (per unit)</th>
+                    <th class="px-6 py-3 text-center">Delete</th>
                 </tr>
                 </thead>
                 <tbody class="bg-white overflow-y-auto divide-y divide-amber-200">
@@ -23,6 +24,18 @@
                         <td class="px-6 py-4">{{ item.quantity }}</td>
                         <td class="px-6 py-4">{{ item.unit }}</td>
                         <td class="px-6 py-4">${{ item.price_per_unit|floatformat:2 }}</td>
+                        <td class="">
+                            <a title="Delete Ingredient" class="flex justify-center" href="{% url 'delete_inventory' item.id %}">
+                                {# TODO: change image from add to delete #}
+                                <svg class="" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="40" height="40"
+                                     viewBox="0 0 48 48">
+                                    <path fill="#4caf50"
+                                          d="M44,24c0,11.045-8.955,20-20,20S4,35.045,4,24S12.955,4,24,4S44,12.955,44,24z"></path>
+                                    <path fill="#fff" d="M21,14h6v20h-6V14z"></path>
+                                    <path fill="#fff" d="M14,21h20v6H14V21z"></path>
+                                </svg>
+                            </a>
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>

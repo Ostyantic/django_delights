@@ -24,6 +24,12 @@ class CreateInventoryView(CreateView):
     success_url = reverse_lazy('inventory')
 
 
+class DeleteInventoryView(DeleteView):
+    model = Ingredient
+    template_name = 'pages/inventory_delete.html'
+    success_url = reverse_lazy('inventory')
+
+
 def menu_items_page(request):
     menu_items = MenuItem.objects.all()
     recipe_requirements = RecipeRequirement.objects.all()
