@@ -4,7 +4,7 @@ from django.views.generic import TemplateView, ListView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from .models import Ingredient, MenuItem, RecipeRequirement, Purchase
-from .forms import IngredientForm, MenuItemForm, RecipeRequirementForm
+from .forms import IngredientForm, MenuItemForm, RecipeRequirementForm, PurchaseForm
 
 
 class HomePageView(TemplateView):
@@ -69,3 +69,22 @@ def recipe_requirement_create_page(request):
 class PurchasesPageView(ListView):
     template_name = 'pages/purchases.html'
     model = Purchase
+
+
+def purchase_create_page(request):
+    if request.method == 'POST':
+        form = PurchaseForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse_lazy('purchases'))
+    else:
+        form = PurchaseForm()
+
+    menu_items = MenuItem.objects.all()
+
+    context = {
+        "form": form,
+        "menu_items": menu_items,
+    }
+
+    return render(request, 'pages/purchases_create.html', context)

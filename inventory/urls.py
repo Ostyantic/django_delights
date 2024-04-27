@@ -10,4 +10,5 @@ urlpatterns = [
     path('menu/add,', views.MenuItemCreate.as_view(), name='add_menu'),
     path('menu/add_menu_ingredient', views.recipe_requirement_create_page, name='add_menu_ingredient'),
     path('purchases/', views.PurchasesPageView.as_view(), name="purchases"),
+    path('purchases/add', views.purchase_create_page, name="add_purchase"),
 ]
