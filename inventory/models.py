@@ -34,7 +34,7 @@ class RecipeRequirement(models.Model):
     quantity = models.FloatField(default=0)
 
     def __str__(self):
-        return f"{self.menu_item.__str__()}"
+        return f"{self.ingredient.__str__()}"
 
 
 class Purchase(models.Model):

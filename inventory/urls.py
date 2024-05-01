@@ -7,6 +7,7 @@ urlpatterns = [
     path('inventory/', views.InventoryPageView.as_view(), name="inventory"),
     path('inventory/add', views.CreateInventoryView.as_view(), name="add_inventory"),
     path('inventory/delete/<pk>', views.DeleteInventoryView.as_view(), name="delete_inventory"),
+    path('inventory/update/<pk>', views.UpdateInventoryView.as_view(), name="update_inventory"),
     path('menu/', views.menu_items_page, name="menu"),
     path('menu/add,', views.MenuItemCreate.as_view(), name='add_menu'),
     path('menu/add_menu_ingredient', views.recipe_requirement_create_page, name='add_menu_ingredient'),

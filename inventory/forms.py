@@ -9,6 +9,12 @@ class IngredientForm(forms.ModelForm):
         fields = '__all__'
 
 
+class IngredientUpdateForm(forms.ModelForm):
+    class Meta:
+        model = Ingredient
+        fields = ('quantity', 'price_per_unit')
+
+
 class MenuItemForm(forms.ModelForm):
     class Meta:
         model = MenuItem
