@@ -7,6 +7,8 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Ingredient, MenuItem, RecipeRequirement, Purchase
 from .forms import IngredientForm, IngredientUpdateForm, MenuItemForm, RecipeRequirementForm, PurchaseForm
 
+from .exceptions import IngredientShortageError
+
 
 # READ VIEWS
 class HomePageView(TemplateView):
@@ -53,24 +55,46 @@ class MenuItemCreate(CreateView):
 
 
 def purchase_create_page(request):
-    # TODO: add logic to update ingredient QTYs in inventory when new purchase is made
+
+    menu_items = MenuItem.objects.all()
+    inventory = Ingredient.objects.all()
+
+    # The current inventory
+    inv_dict = {ingredient.name: ingredient.quantity for ingredient in inventory}
+
     if request.method == 'POST':
         form = PurchaseForm(request.POST)
         if form.is_valid():
+            with transaction.atomic():
+                # making a copy of the form's menu item
+                purchase = form.cleaned_data.get('menu_item')
+
+                # getting the menu_item object
+                purchased_menu_item = purchase.id
+
+                # accessing all the required ingredients needed for the menu_item object
+                purchased_item_ingredients = RecipeRequirement.objects.filter(menu_item=purchased_menu_item)
+
+                # Dictionary of each menu item's required ingredients
+                req_recipes = {recipe_object.ingredient: recipe_object.quantity for recipe_object in
+                               purchased_item_ingredients}
+
+                # for every ingredient in the required recipes dictionary, remove the ingredient qty from our inventory
+                # and update the inventory quantity
+                for ingredient, qty in req_recipes.items():
+                    if inv_dict[ingredient.name] >= qty:
+                        inv_dict[ingredient.name] -= qty
+                        Ingredient.objects.filter(id=ingredient.id).update(quantity=inv_dict[ingredient.name])
+                    else:
+                        raise IngredientShortageError(f"There aren't enough {ingredient} to create this purchase!")
             form.save()
             return redirect(reverse_lazy('purchases'))
     else:
         form = PurchaseForm()
 
-    menu_items = MenuItem.objects.all()
-    required_recipes = RecipeRequirement.objects.all()
-    inventory = Ingredient.objects.all()
-
     context = {
         "form": form,
         "menu_items": menu_items,
-        "required_recipes": required_recipes,
-        "inventory": inventory,
     }
 
     return render(request, 'pages/purchases_create.html', context)
@@ -110,3 +134,9 @@ class DeleteInventoryView(DeleteView):
     model = Ingredient
     template_name = 'pages/inventory_delete.html'
     success_url = reverse_lazy('inventory')
+
+
+class DeletePurchaseView(DeleteView):
+    model = Purchase
+    template_name = 'pages/purchases_delete.html'
+    success_url = reverse_lazy('purchases')
