@@ -1,6 +1,29 @@
 {% extends 'base.html' %}
 
 {% block content %}
+    {% comment %}
+     TODO: This page should keep track of the monthly revenue and profit
+    {% endcomment %}
     <h1>Revenue & Profits</h1>
+
+    <p>Total revenue: {{ total_revenue }}</p>
+
+    {% for item in purchased_items %}
+        <p>{{ item.date_purchased }}</p>
+        <p>{{ item.menu_item }}</p>
+        {#        <p>{{ item.menu_item.price }}</p>#}
+        {#        <p>{{ item.date_purchased }}</p>#}
+    {% endfor %}
+
+    <table>
+        <thead>
+        <tr>
+            <th>Month</th>
+            <th>Revenue</th>
+            <th>Costs</th>
+            <th>Profit</th>
+        </tr>
+        </thead>
+    </table>
 
 {% endblock %}

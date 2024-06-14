@@ -28,10 +28,27 @@ def menu_items_page(request):
     return render(request, "pages/menu.html", {"menu_items": menu_items, "recipe_requirements": recipe_requirements})
 
 
+# TODO: page should keep track of the revenue and subtract inventory costs to provide profits
 def revenue_and_profits_page(request):
+
+    # data = []
+    #
+    # for month in range(1,13):
+    #     month_purchases = Purchase.objects.get(date_purchased__month=month)
+    #     month_revenue = sum([purchase.menu_item.price for purchase in month_purchases])
+
+
     purchased_items = Purchase.objects.all()
-    all_sales = [p.menu_item.price for p in purchased_items]
+    all_sales = [item.menu_item.price for item in purchased_items]
     total_revenue = sum(all_sales)
+
+    context = {
+        "purchased_items": purchased_items,
+        "all_sales": all_sales,
+        "total_revenue": total_revenue,
+    }
+
+    return render(request, 'pages/revenue_and_profits.html', context)
 
 
 class PurchasesPageView(ListView):

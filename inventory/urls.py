@@ -13,4 +13,6 @@ urlpatterns = [
     path('menu/add_menu_ingredient', views.recipe_requirement_create_page, name='add_menu_ingredient'),
     path('purchases/', views.PurchasesPageView.as_view(), name="purchases"),
     path('purchases/add', views.purchase_create_page, name="add_purchase"),
+    path('purchase/delete/<pk>', views.DeletePurchaseView.as_view(), name="delete_purchase"),
+    path('revenue', views.revenue_and_profits_page, name="revenue"),
 ]

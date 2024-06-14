@@ -30,7 +30,7 @@
                     >
                         <option value="" selected="">---------</option>
                         {% for option in ingredients %}
-                            <option value="{{ forloop.counter }}">{{ option }}</option>
+                            <option value="{{ option.id }}">{{ option }}</option>
                         {% endfor %}
                     </select>
                 </div>
