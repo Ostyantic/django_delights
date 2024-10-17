@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Inventory{% endblock %}
+
+
+{% block content %}
+    <h2 class="text-center text-2xl font-bold mb-4">Inventory</h2>
+    <div class="text-right">
+        <div class="flex h-96 overflow-y-auto text-right">
+            <table class="text-left bg-amber-200 table-auto w-full min-w-full divide-y divide-amber-200">
+                <thead class="sticky top-0 bg-amber-200 text-xs font-medium text-amber-500 uppercase tracking-wider">
+                <tr class="">
+                    <th class="px-6 py-3">Name</th>
+                    <th class="px-6 py-3">Quantity</th>
+                    <th class="px-6 py-3">Unit</th>
+                    <th class="px-6 py-3">Price (per unit)</th>
+                    <th class="px-6 py-3 text-center">Edit/Delete</th>
+
+                </tr>
+                </thead>
+                <tbody class="bg-white overflow-y-auto divide-y divide-amber-200">
+                {% for item in ingredient_list %}
+                    <tr class="even:bg-amber-100 hover:bg-amber-500 hover:text-amber-100 whitespace-nowrap">
+                        <td class="px-6 py-4">{{ item.name }}</td>
+                        <td class="px-6 py-4">{{ item.quantity }}</td>
+                        <td class="px-6 py-4">{{ item.unit }}</td>
+                        <td class="px-6 py-4">${{ item.price_per_unit|floatformat:2 }}</td>
+                        <td class="">
+
+                            <div class="flex justify-center space-x-10">
+
+                                <a title="Edit Ingredient" href="{% url 'update_inventory' item.id %}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="15" height="15"
+                                         viewBox="0 0 50 50">
+                                        <path d="M 43.125 2 C 41.878906 2 40.636719 2.488281 39.6875 3.4375 L 38.875 4.25 L 45.75 11.125 C 45.746094 11.128906 46.5625 10.3125 46.5625 10.3125 C 48.464844 8.410156 48.460938 5.335938 46.5625 3.4375 C 45.609375 2.488281 44.371094 2 43.125 2 Z M 37.34375 6.03125 C 37.117188 6.0625 36.90625 6.175781 36.75 6.34375 L 4.3125 38.8125 C 4.183594 38.929688 4.085938 39.082031 4.03125 39.25 L 2.03125 46.75 C 1.941406 47.09375 2.042969 47.457031 2.292969 47.707031 C 2.542969 47.957031 2.90625 48.058594 3.25 47.96875 L 10.75 45.96875 C 10.917969 45.914063 11.070313 45.816406 11.1875 45.6875 L 43.65625 13.25 C 44.054688 12.863281 44.058594 12.226563 43.671875 11.828125 C 43.285156 11.429688 42.648438 11.425781 42.25 11.8125 L 9.96875 44.09375 L 5.90625 40.03125 L 38.1875 7.75 C 38.488281 7.460938 38.578125 7.011719 38.410156 6.628906 C 38.242188 6.246094 37.855469 6.007813 37.4375 6.03125 C 37.40625 6.03125 37.375 6.03125 37.34375 6.03125 Z"></path>
+                                    </svg>
+                                </a>
+
+                                <a title="Delete Ingredient" href="{% url 'delete_inventory' item.id %}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16" height="16"
+                                         viewBox="0,0,256,256"
+                                         style="fill:#000000;">
+                                        <g fill="#ff0000" fill-rule="nonzero" stroke="none" stroke-width="1"
+                                           stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10"
+                                           stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none"
+                                           font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+                                            <g transform="scale(16,16)">
+                                                <path d="M6.49609,1c-0.82031,0 -1.49609,0.67578 -1.49609,1.49609v0.50391h-3v1h1v8.5c0,0.82813 0.67188,1.5 1.5,1.5h6c0.82813,0 1.5,-0.67187 1.5,-1.5v-8.5h1v-1h-3v-0.50391c0,-0.82031 -0.67578,-1.49609 -1.49609,-1.49609zM6.49609,2h2.00781c0.28125,0 0.49609,0.21484 0.49609,0.49609v0.50391h-3v-0.50391c0,-0.28125 0.21484,-0.49609 0.49609,-0.49609zM5,5h1v7h-1zM7,5h1v7h-1zM9,5h1v7h-1z"></path>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </a>
+
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <button id="createInventoryButton"
+                class="mt-5 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+            Add Ingredient
+        </button>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        document.getElementById("createInventoryButton").onclick = function () {
+            location.href = "{% url 'add_inventory' %}";
+        };
+    </script>
+{% endblock %}

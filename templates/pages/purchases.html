@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block title %}Purchases{% endblock %}
+
+{% block content %}
+    <div class="text-center mb-4">
+        <h2 class="text-center text-2xl font-bold">Purchases</h2>
+        <a class="text-blue-400" href="{% url 'revenue' %}">View Revenue & Profits</a>
+    </div>
+
+    <div class="text-right">
+        <div class="h-96 overflow-y-auto text-right">
+            <table class="text-left bg-amber-200 table-auto w-full min-w-full divide-y divide-amber-200">
+                <thead class="sticky top-0 bg-amber-200 text-xs font-medium text-amber-500 uppercase tracking-wider">
+                <tr class="">
+                    <th class="px-6 py-3">Date</th>
+                    <th class="px-6 py-3">Time</th>
+                    <th class="px-6 py-3">Menu Item</th>
+                    <th class="px-6 py-3">Price</th>
+                    <th class="text-center">Delete</th>
+                </tr>
+                </thead>
+                <tbody class="bg-white overflow-y-auto divide-y divide-amber-200">
+                {% for item in purchase_list %}
+                    <tr class="even:bg-amber-100 hover:bg-amber-500 hover:text-amber-100 whitespace-nowrap">
+                        <td class="px-6 py-4">{{ item.date_purchased|date:'m/d/Y' }}</td>
+                        <td class="px-6 py-4">{{ item.date_purchased|date:'H:i' }}</td>
+                        <td class="px-6 py-4">{{ item.menu_item }}</td>
+                        <td class="px-6 py-4">${{ item.menu_item.price|floatformat:2 }}</td>
+                        <td>
+                            <div class="flex justify-center">
+
+                                <a title="Delete Purchase" href="{% url 'delete_purchase' item.id %}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="16" height="16"
+                                         viewBox="0,0,256,256"
+                                         style="fill:#000000;">
+                                        <g fill="#ff0000" fill-rule="nonzero" stroke="none" stroke-width="1"
+                                           stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10"
+                                           stroke-dasharray="" stroke-dashoffset="0" font-family="none"
+                                           font-weight="none"
+                                           font-size="none" text-anchor="none" style="mix-blend-mode: normal">
+                                            <g transform="scale(16,16)">
+                                                <path d="M6.49609,1c-0.82031,0 -1.49609,0.67578 -1.49609,1.49609v0.50391h-3v1h1v8.5c0,0.82813 0.67188,1.5 1.5,1.5h6c0.82813,0 1.5,-0.67187 1.5,-1.5v-8.5h1v-1h-3v-0.50391c0,-0.82031 -0.67578,-1.49609 -1.49609,-1.49609zM6.49609,2h2.00781c0.28125,0 0.49609,0.21484 0.49609,0.49609v0.50391h-3v-0.50391c0,-0.28125 0.21484,-0.49609 0.49609,-0.49609zM5,5h1v7h-1zM7,5h1v7h-1zM9,5h1v7h-1z"></path>
+                                            </g>
+                                        </g>
+                                    </svg>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <button id="createPurchaseButton"
+                class="mt-5 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+            Add Purchase
+        </button>
+
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        document.getElementById("createPurchaseButton").onclick = function () {
+            location.href = "{% url 'add_purchase' %}";
+        };
+    </script>
+
+
+{% endblock %}

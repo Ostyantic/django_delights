@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Menu{% endblock %}
+
+
+
+{% block content %}
+    <h2 class="font-bold text-center text-2xl mb-4">Menu</h2>
+
+    <div class="text-right">
+        <div class="flex h-96 overflow-y-auto">
+            <table class="bg-amber-200 text-left min-w-full divide-y divide-amber-200">
+                <thead class="bg-amber-200 text-xs font-medium text-amber-500 uppercase tracking-wider">
+                <tr>
+                    <th class="px-6 py-3">Name</th>
+                    <th class="px-6 py-3">Price</th>
+                    <th class="px-6 py-3">Ingredients</th>
+                    <th class="text-center">Add/Edit</th>
+                </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-amber-200">
+                {% for menu_item in menu_items %}
+                    <tr class="even:bg-amber-100 hover:bg-amber-500 hover:text-amber-100 whitespace-nowrap">
+                        <td class="px-6 py-4 whitespace-nowrap">{{ menu_item.item_name }}</td>
+                        <td class="px-6 py-4 whitespace-nowrap">${{ menu_item.price|floatformat:2 }}</td>
+                        <td class="px-6 py-4 flex justify-between whitespace-nowrap">
+                            <div>
+                                {% for recipe_item in recipe_requirements %}
+                                    {% if recipe_item.menu_item == menu_item %}
+                                        <p>{{ recipe_item.ingredient }}
+                                            - {{ recipe_item.quantity }} {{ recipe_item.ingredient.unit }}</p>
+                                    {% endif %}
+
+                                {% endfor %}
+                            </div>
+                            {#                                <a title="Add Ingredient" class="my-auto" href="{% url 'add_menu' %}">#}
+                            {#                                    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="40" height="40"#}
+                            {#                                         viewBox="0 0 48 48">#}
+                            {#                                        <path fill="#4caf50"#}
+                            {#                                              d="M44,24c0,11.045-8.955,20-20,20S4,35.045,4,24S12.955,4,24,4S44,12.955,44,24z"></path>#}
+                            {#                                        <path fill="#fff" d="M21,14h6v20h-6V14z"></path>#}
+                            {#                                        <path fill="#fff" d="M14,21h20v6H14V21z"></path>#}
+                            {#                                    </svg>#}
+                            {#                                </a>#}
+                        </td>
+                        <td class="">
+                            <a title="Add Ingredient" class="flex justify-center" href="{% url 'add_menu_ingredient' %}">
+                                <svg class="" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="40" height="40"
+                                     viewBox="0 0 48 48">
+                                    <path fill="#4caf50"
+                                          d="M44,24c0,11.045-8.955,20-20,20S4,35.045,4,24S12.955,4,24,4S44,12.955,44,24z"></path>
+                                    <path fill="#fff" d="M21,14h6v20h-6V14z"></path>
+                                    <path fill="#fff" d="M14,21h20v6H14V21z"></path>
+                                </svg>
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <button id="createMenuButton"
+                class="mt-5 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+            Add Menu Item
+        </button>
+    </div>
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+        document.getElementById("createMenuButton").onclick = function () {
+            location.href = "{% url 'add_menu' %}";
+        };
+    </script>
+{% endblock %}
